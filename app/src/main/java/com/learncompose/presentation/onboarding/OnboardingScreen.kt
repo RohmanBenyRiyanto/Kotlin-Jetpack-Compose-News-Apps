@@ -19,7 +19,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
 import com.learncompose.presentation.Dimens.MediumPadding2
 import com.learncompose.presentation.Dimens.PageIndicatorSize
 import com.learncompose.presentation.Dimens.SmallPadding
