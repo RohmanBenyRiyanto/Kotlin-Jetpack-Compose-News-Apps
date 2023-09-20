@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -22,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import com.learncompose.presentation.Dimens.MediumPadding2
+import com.learncompose.presentation.Dimens.PageIndicatorSize
+import com.learncompose.presentation.Dimens.SmallPadding
 import com.learncompose.presentation.common.PrimaryButton
 import com.learncompose.presentation.common.TextButtons
 import com.learncompose.presentation.onboarding.component.OnBoardingPage
@@ -41,9 +42,9 @@ fun OnBoardingScreen() {
         val buttonsState = remember {
             derivedStateOf {
                 when (pagerState.currentPage) {
-                    0 -> listOf("", "Lanjut")
-                    1 -> listOf("Kembali", "Lanjut")
-                    2 -> listOf("Kembali", "Mulai")
+                    0 -> listOf("", "Next")
+                    1 -> listOf("Back", "Next")
+                    2 -> listOf("Back", "Get Started")
                     else -> listOf("", "")
                 }
             }
@@ -54,8 +55,7 @@ fun OnBoardingScreen() {
         HorizontalPager(state = pagerState) { index ->
             val alpha = if (index == pagerState.currentPage) 1f else 0.5f
             OnBoardingPage(
-                page = pages[index],
-                modifier = Modifier.alpha(alpha)
+                page = pages[index], modifier = Modifier.alpha(alpha)
             )
         }
         Row(
@@ -67,42 +67,35 @@ fun OnBoardingScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             PageIndicator(
-                modifier = Modifier.width(52.dp),
+                modifier = Modifier.width(PageIndicatorSize),
                 pagesSize = pages.size,
                 selectedPage = pagerState.currentPage
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val scope = rememberCoroutineScope()
-                //Hide the button when the first element of the list is empty
                 if (buttonsState.value[0].isNotEmpty()) {
-                    TextButtons(
-                        text = buttonsState.value[0],
-                        onClick = {
-                            scope.launch {
-                                pagerState.animateScrollToPage(
-                                    page = pagerState.currentPage - 1
-                                )
-                            }
-
-                        }
-                    )
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                PrimaryButton(
-                    text = buttonsState.value[1],
-                    onClick = {
+                    TextButtons(text = buttonsState.value[0], onClick = {
                         scope.launch {
-                            if (pagerState.currentPage == 3) {
-                                //Navigate to the main screen and save a value in datastore preferences
-                            } else {
-                                pagerState.animateScrollToPage(
-                                    page = pagerState.currentPage + 1
-                                )
-                            }
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage - 1
+                            )
+                        }
+
+                    })
+                }
+                Spacer(modifier = Modifier.width(SmallPadding))
+                PrimaryButton(text = buttonsState.value[1], onClick = {
+                    scope.launch {
+                        if (pagerState.currentPage == 3) {
+                            //Navigate to the main screen and save a value in datastore preferences
+                        } else {
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage + 1
+                            )
                         }
                     }
-                )
+                })
             }
         }
     }
