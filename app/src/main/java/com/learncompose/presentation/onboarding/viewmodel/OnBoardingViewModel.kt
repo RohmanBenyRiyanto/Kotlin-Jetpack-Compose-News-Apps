@@ -1,4 +1,4 @@
-package com.learncompose.presentation.onboarding
+package com.learncompose.presentation.onboarding.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

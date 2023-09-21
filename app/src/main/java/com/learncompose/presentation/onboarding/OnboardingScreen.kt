@@ -19,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.lifecycle.ViewModel
 import com.learncompose.presentation.Dimens.MediumPadding2
 import com.learncompose.presentation.Dimens.PageIndicatorSize
 import com.learncompose.presentation.Dimens.SmallPadding
@@ -26,11 +27,14 @@ import com.learncompose.presentation.common.PrimaryButton
 import com.learncompose.presentation.common.TextButtons
 import com.learncompose.presentation.onboarding.component.OnBoardingPage
 import com.learncompose.presentation.onboarding.component.PageIndicator
+import com.learncompose.presentation.onboarding.viewmodel.OnBoardingEvent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    event: (OnBoardingEvent) -> Unit = {}
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -86,8 +90,8 @@ fun OnBoardingScreen() {
                 Spacer(modifier = Modifier.width(SmallPadding))
                 PrimaryButton(text = buttonsState.value[1], onClick = {
                     scope.launch {
-                        if (pagerState.currentPage == 3) {
-                            //Navigate to the main screen and save a value in datastore preferences
+                        if (pagerState.currentPage == 2) {
+                            event(OnBoardingEvent.SaveAppOpened)
                         } else {
                             pagerState.animateScrollToPage(
                                 page = pagerState.currentPage + 1
