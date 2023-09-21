@@ -3,7 +3,7 @@ package com.learncompose.di
 import android.app.Application
 import com.learncompose.data.manager.LocalUserManagerImpl
 import com.learncompose.domain.manager.LocalUserManager
-import com.learncompose.domain.usecases.AppEntryUseCases
+import com.learncompose.domain.usecases.AppOpenUseCases
 import com.learncompose.domain.usecases.ReadAppOpen
 import com.learncompose.domain.usecases.SaveAppOpen
 import dagger.Module
@@ -27,7 +27,7 @@ object AppModule {
     @Singleton
     fun provideAppEntryUseCases(
         localUserManager: LocalUserManager
-    ) = AppEntryUseCases(
+    ) = AppOpenUseCases(
         saveAppOpened = SaveAppOpen(localUserManager),
         readAppOpened = ReadAppOpen(localUserManager),
     )
