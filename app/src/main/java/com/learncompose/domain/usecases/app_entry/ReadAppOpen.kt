@@ -1,4 +1,4 @@
-package com.learncompose.domain.usecases
+package com.learncompose.domain.usecases.app_entry
 
 import com.learncompose.domain.manager.LocalUserManager
 import kotlinx.coroutines.flow.Flow
